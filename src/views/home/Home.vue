@@ -2,9 +2,21 @@
     <section class="dola-home">
         <header class="home-header">
             <img src="./logo.png" alt="logo" class="dola-logo" />
+            <div class="dola-login-wrapper" v-if="!isLogin">
+                <span class="btn-wrapper">
+                    <router-link :to="{ name: 'login' }" class="login-btn">登录</router-link>
+                </span>
+                <span class="btn-wrapper">
+                    <router-link :to="{ name: 'register' }" class="register-btn">注册</router-link>
+                </span>
+            </div>
         </header>
         <section class="home-banner-wrapper">
-            <div class="home-banner"></div>
+            <div class="home-banner" v-if="appindex.ad && appindex.ad.length>0">
+                <a :href="appindex.ad[0].url">
+                    <img :src="appindex.ad[0].bg_image" alt="" width="100%" />
+                </a>
+            </div>
         </section>
         <nav class="home-info-nav">
             <ul class="info-nav-lists clearfix">
@@ -17,16 +29,21 @@
             </ul>
         </nav>
         <div class="broad-wrapper"></div>
+        <dl-nav></dl-nav>
     </section>
 </template>
 
 <script>
     import { mapGetters } from 'vuex';
 
+    import dlNav from '../../components/nav/dlNav.vue';
+
     export default {
         name: 'home',
         data() {
-            return {};
+            return {
+                isLogin: false
+            };
         },
         computed: {
             ...mapGetters({
@@ -35,12 +52,13 @@
         },
         methods: {
         },
-        created() {
-        },
         mounted() {
             this.$store.dispatch({
                 type: 'appindex'
             });
+        },
+        components: {
+            'dl-nav': dlNav
         }
     }
 </script>
@@ -62,6 +80,22 @@
             .dola-logo {
                 width: 141px;
                 height: 24px;
+            }
+            .dola-login-wrapper {
+                position: absolute;
+                right: 15px;
+                top: 0;
+                font-size: 0;
+                .btn-wrapper {
+                    .login-btn, .register-btn {
+                        font-size: 17px;
+                        color: #fff;
+                        padding: 0 10px;
+                    }
+                    .login-btn {
+                        border-right: 1px solid #fff;
+                    }
+                }
             }
         }
         .home-banner-wrapper {

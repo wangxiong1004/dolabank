@@ -32,11 +32,13 @@
                 <p class="dola-tips-text">Copyright © 2015-2018 dolabank.com All rughts reserved</p>
             </div>
         </div>
+        <dl-nav></dl-nav>
     </section>
 </template>
 
 <script>
     import TopBar from '../../components/TopBar.vue';
+    import dlNav from '../../components/nav/dlNav.vue';
 
     export default {
         name: 'more',
@@ -46,7 +48,8 @@
             };
         },
         components: {
-            'top-bar': TopBar
+            'top-bar': TopBar,
+            'dl-nav': dlNav
         }
     }
 </script>

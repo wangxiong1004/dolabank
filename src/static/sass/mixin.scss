@@ -29,7 +29,7 @@
 
 }
 
-@mixin boder-none() {
+@mixin border-none() {
     &::after {
         content: '';
         border: none;

@@ -8,7 +8,6 @@
             <ul class="about-lists">
                 <li class="list list01 border-1px">
                     <router-link :to="{ name: 'notice' }" class="item">公告</router-link>
-                    <!--<a href="javascript:;" class="item">公告</a>-->
                 </li>
                 <li class="list list02 border-1px">
                     <router-link :to="{ name: 'notice' }" class="item">媒体报道</router-link>
@@ -85,7 +84,7 @@
                         color: #333;
                     }
                     &:last-of-type {
-                        @include boder-none();
+                        @include border-none();
                     }
                 }
             }

@@ -8,6 +8,8 @@ import Login from '../views/login/Login.vue';   // 登录
 import Register from '../views/register/Register.vue';  // 注册
 import ForgetPass from '../views/login/ForgetPass.vue'; // 忘记密码
 
+import Notice from '../views/more/Notice.vue';  // 公告
+
 const routes = [{
     path: '/home',
     name: 'home',
@@ -37,6 +39,10 @@ const routes = [{
     path: '/forgetpass',
     name: 'forgetpass',
     component: ForgetPass
+}, {
+    path: '/notice',
+    name: 'notice',
+    component: Notice
 }, {
     path: '*',
 //  redirect: '/home'

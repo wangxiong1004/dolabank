@@ -1,7 +1,9 @@
 <template>
     <div id="app" class="dola-app">
         <div class="dola-content">
-            <router-view></router-view>
+            <keep-alive>
+                <router-view></router-view>
+            </keep-alive>
         </div>
         <div class="bottom-nav border-1px" v-if="isNavShow">
             <router-link :to="{name: 'home'}" class="dola-nav nav-home">
@@ -39,7 +41,7 @@
         },
         watch: {
             "$route"(to, from) {
-                if (to.name === 'login' || to.name === 'register' || to.name === 'forgetpass') {
+                if (to.name === 'login' || to.name === 'register' || to.name === 'forgetpass' || to.name === 'notice') {
                 	this.isNavShow = false;
                 } else {
                     this.isNavShow = true;
@@ -48,7 +50,7 @@
         },
         mounted() {
             const loadingRouter = this.$router.history.current.name;
-            if (loadingRouter === 'login' || loadingRouter === 'register' || loadingRouter === 'forgetpass') {
+            if (loadingRouter === 'login' || loadingRouter === 'register' || loadingRouter === 'forgetpass' || loadingRouter === 'notice') {
                 this.isNavShow = false;
             }
 

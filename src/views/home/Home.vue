@@ -6,13 +6,22 @@
         <section class="home-banner-wrapper">
             <div class="home-banner"></div>
         </section>
-        <nav class="home-info-nav"></nav>
+        <nav class="home-info-nav">
+            <ul class="info-nav-lists clearfix">
+                <li class="info-nav-list" v-for="(val, index) in appindex.recommendMenu" :key="index">
+                    <a :href="val.forwardUrl">
+                        <img :src="val.imageUrl"/>
+                        <em>{{ val.name }}</em>
+                    </a>
+                </li>
+            </ul>
+        </nav>
         <div class="broad-wrapper"></div>
     </section>
 </template>
 
 <script>
-    import {mapState} from 'vuex'
+    import { mapGetters } from 'vuex';
 
     export default {
         name: 'home',
@@ -20,24 +29,25 @@
             return {};
         },
         computed: {
-            ...mapState({
-                appindex: state => state.home.appindex
+            ...mapGetters({
+                appindex: 'appindex'
             })
         },
         methods: {
-            getAppindex() {
-                this.$store.dispatch({
-                    type: 'appindex'
-                });
-            }
         },
         created() {
-            this.getAppindex();
+        },
+        mounted() {
+            this.$store.dispatch({
+                type: 'appindex'
+            });
         }
     }
 </script>
 
 <style lang="scss">
+    /*@import '../../static/sass/index.scss';*/
+
     .dola-home {
         .home-header {
             position: fixed;
@@ -63,6 +73,44 @@
                 background: url('./home-loading.png') no-repeat center;
                 background-size: 100% 180px;
             }
+        }
+        .home-info-nav {
+            width: 100%;
+            margin-bottom: 10px;
+            background: #fff;
+            white-space: nowrap;
+            overflow-x: auto;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+            .info-nav-lists {
+                padding: 30px 0;
+                display: flex;
+                .info-nav-list {
+                    flex: 1;
+                    text-align: center;
+                    a {
+                        display: block;
+                        img {
+                            display: block;
+                            width: 42px;
+                            height: 42px;
+                            margin: 0 auto;
+                            border-radius: 50%;
+                        }
+                        em {
+                            display: block;
+                            margin-top: 9px;
+                            font-size: 13px;
+                            color: #666;
+                        }
+                    }
+                }
+            }
+        }
+        .broad-wrapper {
+            padding: 15px 10px;
+            margin-bottom: 10px;
+            background-color: #fff;
         }
     }
 </style>

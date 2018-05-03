@@ -1,10 +1,16 @@
 
 import {services as Services} from '../../api/index';
 import Util from '../../util/index';
+import {Indicator} from 'mint-ui';
+import {Toast} from 'mint-ui';
 
 const state = {
     appindex: {}
 }
+
+const getters = {
+    appindex: state => state.appindex
+};
 
 const mutations = {
     appindex(state, payload) {
@@ -19,10 +25,10 @@ const actions = {
         let params = Util.getParams('wechat', token, '');
         console.log(params);
         params = Util.encryption(Codekey, params, 'code');
-//      Indicator.open({
-//          text: '拼命加载...',
-//          spinnerType: 'triple-bounce'
-//      });
+        Indicator.open({
+            text: '拼命加载...',
+            spinnerType: 'triple-bounce'
+        });
         Services.appindex(Codekey, params).then(function (res) {
             var key = res.headers['x-dola-edoc'];
             var data = res.data;
@@ -34,21 +40,21 @@ const actions = {
                     type: 'appindex',
                     res: data
                 });
-//              Indicator.close();
+                Indicator.close();
             } else {
-//              Indicator.close();
-//              Toast({
-//                  message: data.msg,
-//                  duration: 1500
-//              });
+                Indicator.close();
+                Toast({
+                    message: data.msg,
+                    duration: 1500
+                });
             }
         }).catch(function (err) {
-//          Indicator.close();
+            Indicator.close();
         })
     }
 }
 
-const getters = {};
+
 
 export default {
     state,

@@ -21,7 +21,12 @@
                     <router-link :to="{ name: 'notice' }" class="item">关于我们</router-link>
                 </li>
                 <li class="list list02 border-1px">
-                    <router-link :to="{ name: 'notice' }" class="item">联系客服</router-link>
+                    <a href="tel:4001799098" class="item">
+                        <div class="layout">
+                            <span class="name">联系客服</span>
+                            <span class="desc">400 1799 438</span>
+                        </div>
+                    </a>
                 </li>
                 <li class="list list03 border-1px">
                     <router-link :to="{ name: 'notice' }" class="item">常见问题</router-link>
@@ -85,6 +90,15 @@
                         display: block;
                         font-size: 15px;
                         color: #333;
+                        .layout {
+                            display: flex;
+                            justify-content: space-between;
+                            .desc {
+                                margin-right: 12px;
+                                font-size: 12px;
+                                color: #666;
+                            }
+                        }
                     }
                     &:last-of-type {
                         @include border-none();
@@ -96,8 +110,9 @@
                 background: #f4f1ef;
                 .dola-tips-text {
                     text-align: center;
-                    font-size: 11px;
                     line-height: 14px;
+                    font-size: 11px;
+                    font-family: Arial;
                     color: #b0b0b0;
                 }
             }

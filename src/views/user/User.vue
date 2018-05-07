@@ -1,8 +1,12 @@
 <template>
-    <section class="dola-user">User -- {{ username }} -- {{ $route.params.id }}</section>
+    <section class="dola-user">User -- {{ username }} -- {{ $route.params.id }}
+        <dl-nav></dl-nav>
+    </section>
 </template>
 
 <script>
+    import dlNav from '../../components/nav/dlNav.vue';
+
     export default {
         computed: {
             username() {
@@ -32,6 +36,9 @@
             console.log(to);
             console.log(from);
             console.log(next);
+        },
+        components: {
+            'dl-nav': dlNav
         }
     }
 </script>

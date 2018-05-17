@@ -64,7 +64,7 @@
 </script>
 
 <style lang="scss">
-    /*@import '../../static/sass/index.scss';*/
+    /*@import '../../common/sass/index.scss';*/
 
     .dola-home {
         .home-header {

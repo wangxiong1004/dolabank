@@ -60,7 +60,7 @@
 </script>
 
 <style lang="scss">
-    @import '../../static/sass/index.scss';
+    @import '../../common/sass/index.scss';
 
     .dola-more {
         height: 100%;

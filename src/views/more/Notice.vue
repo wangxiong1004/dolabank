@@ -32,7 +32,7 @@
 </script>
 
 <style lang="scss">
-    @import '../../static/sass/index.scss';
+    @import '../../common/sass/index.scss';
 
     .dola-notice-lists {
         padding-top: 44px;

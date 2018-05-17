@@ -35,7 +35,7 @@
 </script>
 
 <style lang="scss">
-    @import '../../static/sass/index.scss';
+    @import '../../common/sass/index.scss';
 
     .dola-app {
         max-width: 640px;
@@ -74,25 +74,25 @@
                 }
                 &.nav-home {
                     .nav-img {
-                        background-image: url('../../static/images/nav/nav_item01.png');
+                        background-image: url('../../common/images/nav/nav_item01.png');
                         background-size: 22px 22px;
                     }
                 }
                 &.nav-product {
                     .nav-img {
-                        background-image: url('../../static/images/nav/nav_item02.png');
+                        background-image: url('../../common/images/nav/nav_item02.png');
                         background-size: 22px 22px;
                     }
                 }
                 &.nav-user {
                     .nav-img {
-                        background-image: url('../../static/images/nav/nav_item03.png');
+                        background-image: url('../../common/images/nav/nav_item03.png');
                         background-size: 22px 22px;
                     }
                 }
                 &.nav-more {
                     .nav-img {
-                        background-image: url('../../static/images/nav/nav_item04.png');
+                        background-image: url('../../common/images/nav/nav_item04.png');
                         background-size: 22px 22px;
                     }
                 }
@@ -103,25 +103,25 @@
                     color: #f63;
                     &.nav-home {
                         .nav-img {
-                            background-image: url('../../static/images/nav/nav_item01_active.png');
+                            background-image: url('../../common/images/nav/nav_item01_active.png');
                             background-size: 22px 22px;
                         }
                     }
                     &.nav-product {
                         .nav-img {
-                            background-image: url('../../static/images/nav/nav_item02_active.png');
+                            background-image: url('../../common/images/nav/nav_item02_active.png');
                             background-size: 22px 22px;
                         }
                     }
                     &.nav-user {
                         .nav-img {
-                            background-image: url('../../static/images/nav/nav_item03_active.png');
+                            background-image: url('../../common/images/nav/nav_item03_active.png');
                             background-size: 22px 22px;
                         }
                     }
                     &.nav-more {
                         .nav-img {
-                            background-image: url('../../static/images/nav/nav_item04_active.png');
+                            background-image: url('../../common/images/nav/nav_item04_active.png');
                             background-size: 22px 22px;
                         }
                     }

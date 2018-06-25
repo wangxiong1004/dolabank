@@ -1,48 +1,52 @@
 import axios from 'axios';
 
-let urlApi, url;
-switch (window.location.hostname) {
-    case "www.dolabank.com":
-        urlApi = 'https://www.dolabank.com/apigateway/';
-        url = 'https://www.dolabank.com/';
-        break;
-    case "www.dolabank.top":
-        urlApi = 'https://api.dolabank.top/';
-        url = 'https://www.dolabank.top/';
-        break;
-    case "www.duolajucai.top":
-        urlApi = 'https://api.duolajucai.top/';
-        url = 'https://www.duolajucai.top/';
-        break;
-    case "www.dolabank.club":
-        urlApi = 'https://api.dolabank.club/';
-        url = 'https://www.dolabank.club/';
-        break;
-    case "www.dola.dev":
-        urlApi = 'https://api.dola.dev/';
-        url = 'https://www.dola.dev/';
-        break;
-    default:
-        urlApi = 'https://www.dolabank.com/apigateway/';
-        url = 'https://www.dolabank.com/';
-}
-
-export const productionUrlApi = urlApi;
-export const productionUrl = url;
+import domain from './domain';
+import Util from '../util';
 
 export const apis = {
-    appindex: 'https://www.dolabank.com/apigateway/' + 'v1/app/appindex'
+    appIndex: domain.urlApi + 'v1/app/appindex'
 }
 
-export const services = {
-    appindex(Codekey, params) {
-        return axios.get(apis.appindex, {
-            params: {
-                data: params
-            },
-            headers: {
-                'X-Dola-Code': Codekey
-            }
-        })
+/*
+ * getData: 获取数据
+ * url: 接口
+ * data: {} 数据
+ * platform: 平台
+ * success: 成功
+ * error: 失败
+ */
+export function getData(options) {
+  let Codekey = Util.getRrandomStr();
+  let token = Util.getCookie('token');
+//   token = 'a6a8f355bbf54305c866a8308e88583c';
+  let platform = options.platform || 'wechat';
+  let params = Util.getParams(platform, token, options.data);
+
+  console.log(params);
+  params = Util.encryption(Codekey, params, 'code');
+
+  return axios.get(options.url, {
+    params: {
+      data: params
+    },
+    headers: {
+      'X-Dola-Code': Codekey
     }
+  }).then((res) => {
+    var key = res.headers['x-dola-edoc'];
+    var data = res.data;
+    var str = Util.decrypt(key, data, 'code')
+    var data = JSON.parse(str);
+    // console.log(data);
+    if (data.code == 0) {
+      if (options.success && typeof options.success === 'function') {
+        options.success(data);
+      }
+
+    } else {
+        if (options.error && typeof options.error === 'function') {
+          options.error(data);
+        }
+    }
+  })
 }

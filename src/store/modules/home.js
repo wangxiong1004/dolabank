@@ -1,64 +1,69 @@
-
-import {services as Services} from '../../api/index';
+import {
+  apis,
+  getData
+} from '../../api/index';
 import Util from '../../util/index';
-import {Indicator} from 'mint-ui';
-import {Toast} from 'mint-ui';
+import {
+  Indicator
+} from 'mint-ui';
+import {
+  Toast
+} from 'mint-ui';
 
 const state = {
-    appindex: {}
+  appindex: {},
+  broadList: []
 }
 
 const getters = {
-    appindex: state => state.appindex
+//   broadList: state => state.appindex.public_message
 };
 
 const mutations = {
-    appindex(state, payload) {
-        state.appindex = payload.res.data;
-    }
+  appIndex(state, payload) {
+    state.appindex = payload.res.data;
+    state.broadList = payload.res.data.public_message.data;
+  }
 }
 
 const actions = {
-    appindex({commit}, payload) {
-        let Codekey = Util.getRrandomStr();
-        let token = Util.getCookie('token');
-        let params = Util.getParams('wechat', token, '');
-        console.log(params);
-        params = Util.encryption(Codekey, params, 'code');
-        Indicator.open({
-            text: '拼命加载...',
-            spinnerType: 'triple-bounce'
+  appIndex({
+    commit
+  }, payload) {
+
+    Indicator.open({
+      text: '拼命加载...',
+      spinnerType: 'triple-bounce'
+    });
+
+    getData({
+      url: apis.appIndex,
+      success: (data) => {
+        console.log(data);
+        Indicator.close();
+        commit({
+          type: 'appIndex',
+          res: data
         });
-        Services.appindex(Codekey, params).then(function (res) {
-            var key = res.headers['x-dola-edoc'];
-            var data = res.data;
-            var str = Util.decrypt(key, data, 'code')
-            var data = JSON.parse(str);
-            console.log(data);
-            if (data.code == 0) {
-                commit({
-                    type: 'appindex',
-                    res: data
-                });
-                Indicator.close();
-            } else {
-                Indicator.close();
-                Toast({
-                    message: data.msg,
-                    duration: 1500
-                });
-            }
-        }).catch(function (err) {
-            Indicator.close();
-        })
-    }
+      },
+      error(data) {
+        Indicator.close();
+        Toast({
+          message: data.msg,
+          duration: 1500
+        });
+      }
+    }).catch(function (err) {
+      Indicator.close();
+    });
+  }
 }
 
 
 
 export default {
-    state,
-    mutations,
-    getters,
-    actions
+  state,
+  mutations,
+  getters,
+  actions
 };

@@ -2,7 +2,7 @@
     <section class="dola-register">
         <top-bar :topBarName="topBarName"></top-bar>
         <div class="dola-register-content">
-            <img src="" alt="" class="dola-register-logo" />
+            <div src="" alt="" class="dola-register-logo" ></div>
             <form class="dola-register-form" autocomplete="off">
                 <ul class="dola-register-lists">
                     <li class="dola-register-list dola-register-list01">

@@ -125,18 +125,15 @@
         computed: {
             pullUpTxt() {
                 const moreTxt = this.pullUpLoad && this.pullUpLoad.txt && this.pullUpLoad
-                    .txt.more || this.$i18n.t(
-                        'scrollComponent.defaultLoadTxtMore')
+                    .txt.more || '加载更多'
 
                 const noMoreTxt = this.pullUpLoad && this.pullUpLoad.txt &&
-                    this.pullUpLoad.txt.noMore || this.$i18n.t(
-                        'scrollComponent.defaultLoadTxtNoMore')
+                    this.pullUpLoad.txt.noMore || '没有更多的数据了'
 
                 return this.pullUpDirty ? moreTxt : noMoreTxt
             },
             refreshTxt() {
-                return this.pullDownRefresh && this.pullDownRefresh.txt || this
-                    .$i18n.t('scrollComponent.defaultRefreshTxt')
+                return this.pullDownRefresh && this.pullDownRefresh.txt || '刷新成功'
             }
         },
         created() {

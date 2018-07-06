@@ -41,7 +41,7 @@
             </nav>
 
             <!-- 公告 -->
-            <div class="broad-wrapper" v-if="appIndex.public_message">
+            <section class="broad-wrapper" v-if="appIndex.public_message">
                 <i class="broad-icon"></i>
                 <div class="broad-text-wrapper" style="position: relative;">
                     <div :style="{ top: -num + 'px'}" :class="{ marquee_top: num }">
@@ -49,10 +49,10 @@
                     </div>
                 </div>
                 <a :href="appIndex.public_message.more_link" class="broad-more">更多<i class="icon"></i></a>
-            </div>
+            </section>
 
             <!-- 预约投标 -->
-            <div class="yuyue-wrapper" v-if="appIndex.batch_auto && appIndex.batch_auto.is_list_open > 0">
+            <section class="yuyue-wrapper" v-if="appIndex.batch_auto && appIndex.batch_auto.is_list_open > 0">
                 <div class="yuyue">
                     <a :href="appIndex.batch_auto.batch_auto_link" class="yuyue-btn">
                         <div class="yuyue-layout">
@@ -70,10 +70,10 @@
                         </div>
                     </a>
                 </div>
-            </div>
+            </section>
 
             <!-- 一键投标 -->
-            <div class="batch-wrapper" v-if="appIndex.investTool">
+            <section class="batch-wrapper" v-if="appIndex.investTool">
                 <div class="tit-wrapper">
                     <h4 class="batch-tit">一键投标工具</h4>
                     <p class="batch-desc">自主投标&nbsp;期限多样</p>
@@ -99,83 +99,72 @@
                 <div class="batch-btn-wrapper">
                     <a :href="appIndex.investTool.invest_link" class="batch-btn"><i class="icon"></i>一键投标</a>
                 </div>
-            </div>
+            </section>
 
             <!-- 散标列表 -->
-            <div class="pro-wrapper standard-wrapper">
+            <section class="pro-wrapper standard-wrapper" v-if="appIndex.loan_transfer_info && appIndex.loan_transfer_info.loan_info">
                 <div class="standard-tit-wrapper pro-tit-wrapper">
                     <h4 class="standard-tit pro-tit">散标列表</h4>
-                    <a href="javascript:;" class="more">查看更多<i class="icon"></i></a>
+                    <a :href="appIndex.loan_transfer_info.loan_info.forward_url" class="more">查看更多<i class="icon"></i></a>
                 </div>
                 <div class="standard-content pro-content">
-                    <div class="standard-cont standard-cont01 pro-cont">
-                        <div class="top">
-                            <span class="user">王</span>
-                            <span class="desc">借款人</span>
+                    <router-link class="standard-cont pro-cont pro-cont01" :class="'standard-cont0' + (index+1) + ' pro-cont0' + (index+1)"  :to="{name: 'product_detail', params: {proID: val.loan_id}}" v-for="(val, index) in appIndex.loan_transfer_info.loan_info.data" :key="index">
+                        <div>
+                            <div class="top">
+                                <span class="user">{{ val.debtor_first_name }}</span>
+                                <span class="desc">借款人</span>
+                            </div>
+                            <div class="center">
+                                <p><b>{{ val.interest_rate }}</b><em>%</em><span>{{ val.loan_period }}个月</span></p>
+                                <p class="desc">往期年化收益</p>
+                            </div>
+                            <div class="bottom">
+                                <em class="progress" :style="{'width': parseInt(val.matched_amount/val.loan_amount*100).toFixed(0) + '%'}"></em>
+                            </div>
                         </div>
-                        <div class="center">
-                            <p><b>12</b><em>%</em><span>3个月</span></p>
-                            <p class="desc">往期年化收益</p>
-                        </div>
-                        <div class="bottom">
-                            <em class="progress"></em>
-                        </div>
-                    </div>
-                    <div class="standard-cont standard-cont02 pro-cont pro-cont02">
-                        <div class="top">
-                            <span class="user">王</span>
-                            <span class="desc">借款人</span>
-                        </div>
-                        <div class="center">
-                            <p><b>12</b><em>%</em><span>3个月</span></p>
-                            <p class="desc">往期年化收益</p>
-                        </div>
-                        <div class="bottom">
-                            <em class="progress" style="width: 30%;"></em>
-                        </div>
-                    </div>
+                    </router-link>
                 </div>
-            </div>
+            </section>
 
             <!-- 转让列表 -->
-            <div class="pro-wrapper transfer-wrapper">
+            <section class="pro-wrapper transfer-wrapper layout" v-if="appIndex.loan_transfer_info && appIndex.loan_transfer_info.transfer_info">
                 <div class="transfer-tit-wrapper pro-tit-wrapper">
                     <h4 class="transfer-tit pro-tit">转让列表</h4>
-                    <a href="javascript:;" class="more">查看更多<i class="icon"></i></a>
+                    <a :href="appIndex.loan_transfer_info.transfer_info.forward_url" class="more">查看更多<i class="icon"></i></a>
                 </div>
                 <div class="transfer-content pro-content">
-                    <div class="transfer-cont transfer-cont01 pro-cont">
-                        <div class="top">
-                            <span class="user">王</span>
-                            <span class="desc">转让人</span>
+                    <router-link class="transfer-cont pro-cont" :class="'transfer-cont0' + (index + 1)" :to="{name: 'transfer_detail', params: {proID: val.transfer_id}}" v-for="(val, index) in appIndex.loan_transfer_info.transfer_info.data" :key="index">
+                        <div>
+                            <div class="top">
+                                <span class="user">{{ val.debtor_first_name }}</span>
+                                <span class="desc">转让人</span>
+                            </div>
+                            <div class="center">
+                                <p><b>{{ val.interest_rate }}</b><em>%</em><span>{{ val.left_period_text }}</span></p>
+                                <p class="desc">往期年化收益</p>
+                            </div>
+                            <div class="bottom">
+                                <span>转让{{ val.transfer_money }}元</span>
+                                <i class="icon" v-if="val.discount_text !== ''">折价</i>
+                            </div>
                         </div>
-                        <div class="center">
-                            <p><b>12</b><em>%</em><span>12个月10天</span></p>
-                            <p class="desc">往期年化收益</p>
-                        </div>
-                        <div class="bottom">
-                            <span>转让19800元</span>
-                            <i class="icon">折价</i>
-                        </div>
-                    </div>
-                    <div class="transfer-cont transfer-cont02 pro-cont">
-                        <div class="top">
-                            <span class="user">王</span>
-                            <span class="desc">转让人</span>
-                        </div>
-                        <div class="center">
-                            <p><b>12</b><em>%</em><span>3个月</span></p>
-                            <p class="desc">往期年化收益</p>
-                        </div>
-                        <div class="bottom">
-                            <span>转让19800元</span>
-                            <i class="icon">折价</i>
-                        </div>
-                    </div>
+                    </router-link>
                 </div>
-            </div>
+            </section>
 
             <!-- 媒体报道--网贷课堂 -->
+            <section class="dola-information">
+                <button @click="tab('tab-container1')">tabs01</button>
+                <button @click="tab('tab-container2')">tabs02</button>
+                <mt-tab-container v-model="actives" :swipeable="true">
+                    <mt-tab-container-item id="tab-container1">
+                        tab01
+                    </mt-tab-container-item>
+                    <mt-tab-container-item id="tab-container2">
+                        tab02
+                    </mt-tab-container-item>
+                </mt-tab-container>
+            </section>
             <!-- 联系我们--常见问题 -->
             <!-- 底部导航 -->
             <dl-nav></dl-nav>
@@ -186,19 +175,22 @@
 <script>
 import Vue from "vue";
 import { mapGetters, mapMutations, mapActions, mapState } from "vuex";
-import { Swipe, SwipeItem } from "mint-ui";
+import { Swipe, SwipeItem, TabContainer, TabContainerItem } from "mint-ui";
 
 import dlNav from "../../components/nav/dlNav.vue";
 
 Vue.component(Swipe.name, Swipe);
 Vue.component(SwipeItem.name, SwipeItem);
+Vue.component(TabContainer.name, TabContainer);
+Vue.component(TabContainerItem.name, TabContainerItem);
 
 export default {
   name: "home",
   data() {
     return {
       isLogin: false,
-      num: 0
+      num: 0,
+      actives: 'tab-container2'
     };
   },
   computed: {
@@ -224,6 +216,9 @@ export default {
           that.num = num * 54;
         }, 2000);
       });
+    },
+    tab(id) {
+        this.actives = id;
     }
   },
   mounted() {
@@ -236,6 +231,8 @@ export default {
     setTimeout(function() {
       that.showMarquee(that.num);
     }, 2000);
+
+    console.log(this.$route);
   },
   components: {
     "dl-nav": dlNav
@@ -247,7 +244,7 @@ export default {
 /*@import '../../common/sass/index.scss';*/
 
 .dola-home {
-  height: 100%;
+  min-height: 100%;
   background-color: #f5f5f5;
   .home-header {
     position: fixed;
@@ -349,14 +346,13 @@ export default {
       vertical-align: middle;
     }
     .broad-text-wrapper {
-      padding-left: 60px;
-      padding-right: 60px;
       height: 54px;
       overflow: hidden;
       > div {
         position: absolute;
         top: 0;
         left: 60px;
+        right: 60px;
       }
       .marquee_top {
         transition: top 0.5s;
@@ -400,7 +396,7 @@ export default {
       height: 100px;
       border-radius: 3px;
       background: url(./i1.png) no-repeat center;
-      background-size: contain;
+      background-size: 100%;
       .yuyue-layout {
         display: flex;
         // justify-content: space-between;
@@ -692,6 +688,13 @@ export default {
         }
       }
     }
+    &.transfer-wrapper.layout {
+        padding-bottom: 13px;
+        margin-bottom: 12px;
+    }
+  }
+  .dola-information {
+      height: 308px;
   }
 }
 </style>
